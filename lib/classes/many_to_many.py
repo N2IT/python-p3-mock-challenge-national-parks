@@ -25,13 +25,36 @@ class NationalPark:
         return [ trip for trip in Trip.all if trip.national_park == self ]
     
     def visitors(self):
-        pass
+        v_visited = []
+        for trip in Trip.all:
+            if trip.national_park == self:
+                if trip.visitor not in v_visited:
+                    v_visited.append(trip.visitor)
+        return v_visited
     
     def total_visits(self):
-        pass
-    
+        total_visit = {}
+        for trip in Trip.all:
+            if trip.national_park == self:
+                if trip.national_park not in total_visit:
+                    total_visit[self] = 1
+                else:
+                    total_visit[self] += 1
+        return total_visit[self]
+
     def best_visitor(self):
-        pass
+        best_visitor = {}
+        for trip in Trip.all:
+            if trip.national_park == self:
+                if trip.visitor not in best_visitor:
+                    best_visitor[trip.visitor] = 1
+                else: 
+                    best_visitor[trip.visitor] += 1
+
+        return max(best_visitor, key = best_visitor.get) # gonna need to review this method
+
+    def __repr__(self):
+        return f"{self.name}"
 
 
 class Visitor:
@@ -63,6 +86,8 @@ class Visitor:
     def total_visits_at_park(self, park):
         pass
 
+    def __repr__(self):
+        return f"{self.name}"
 
 class Trip:
 
@@ -120,3 +145,6 @@ class Trip:
     def national_park(self, national_park):
         if isinstance(national_park, NationalPark):
             self._national_park = national_park
+
+    def __repr__(self):
+        return f"Visitor: {self.visitor}\nNational Park: {self.national_park}\nStart Date: {self.start_date}\nEnd Date: {self.end_date}"
