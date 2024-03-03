@@ -70,7 +70,7 @@ class Visitor:
 
     @property
     def name(self):
-        self._name
+        return self._name
 
     @name.setter
     def name(self, name):
