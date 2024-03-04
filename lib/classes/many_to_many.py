@@ -53,6 +53,19 @@ class NationalPark:
 
         return max(best_visitor, key = best_visitor.get) # gonna need to review this method
 
+    @classmethod
+    def most_visited(cls):
+        most_visited={}
+        for trip in Trip.all:
+            if trip.national_park not in most_visited:
+                most_visited[trip.national_park] = 1
+            else:
+                most_visited[trip.national_park] += 1
+    
+        return max(most_visited, key = most_visited.get)
+
+
+        
     def __repr__(self):
         return f"{self.name}"
 
