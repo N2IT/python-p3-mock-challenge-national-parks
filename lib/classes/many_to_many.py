@@ -17,10 +17,14 @@ class NationalPark:
 
     @name.setter
     def name(self, name):
-        if not hasattr(self, "name"):
-            if isinstance(name, str) and 3 < len(name):
-                self._name = name
-        
+        if hasattr(self, "_name"):
+            raise Exception("Cannot change the name of the national park")
+        elif isinstance(name, str) and len(name) > 3:
+            self._name = name
+        else:
+            raise Exception("The name must be a string with more than 3 characters")
+
+                
     def trips(self):
         return [ trip for trip in Trip.all if trip.national_park == self ]
     
@@ -89,6 +93,8 @@ class Visitor:
     def name(self, name):
         if isinstance(name, str) and 1 < len(name) < 15:
             self._name = name
+        else:
+            raise Exception("Visitor is initialized with a name of type str")
         
     def trips(self):
         return [ trip for trip in Trip.all if trip.visitor == self ]
@@ -146,6 +152,8 @@ class Trip:
     def start_date(self, start_date):
         if isinstance(start_date, str) and len(start_date) >= 7:
             self._start_date = start_date
+        else:
+            raise Exception("Trip is initialized with a mutable start date of type st")
 
     @property
     def end_date(self):
@@ -155,6 +163,8 @@ class Trip:
     def end_date(self, end_date):
         if isinstance(end_date, str) and len(end_date) >= 7:
             self._end_date = end_date
+        else:
+            raise Exception("Trip is initialized with a mutable end_date of type str")
     
     @property
     def visitor(self):
