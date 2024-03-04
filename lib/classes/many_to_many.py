@@ -81,10 +81,25 @@ class Visitor:
         return [ trip for trip in Trip.all if trip.visitor == self ]
     
     def national_parks(self):
-        pass
+        p_visited = []
+        for trip in Trip.all:
+            if trip.visitor == self:
+                if trip.national_park not in p_visited:
+                    p_visited.append(trip.national_park)
+        return p_visited
     
     def total_visits_at_park(self, park):
-        pass
+        # check park in arugument
+        # return total number of visits the self(visitor) has made to park argument
+        # if no visits to park, return 0
+        p_visited = {}
+        for trip in Trip.all:
+            if trip.visitor == self:
+                if park not in p_visited:
+                    p_visited[park] = 0
+                if park == trip.national_park:
+                    p_visited[park] += 1
+        return p_visited[park]
 
     def __repr__(self):
         return f"{self.name}"
@@ -112,7 +127,7 @@ class Trip:
 
     @property
     def start_date(self):
-        self._start_date
+        return self._start_date
     
     @start_date.setter
     def start_date(self, start_date):
